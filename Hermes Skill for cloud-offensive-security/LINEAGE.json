@@ -1,0 +1,20 @@
+{
+  "name": "cloud-offensive-security",
+  "kind": "hermes-skill (reference/knowledge)",
+  "derived_from": "public repo cloud-offensive-security (CC BY-SA 4.0)",
+  "sibling_execution_skill": "cloud-offensive",
+  "history": [
+    {
+      "version": "1.0.0",
+      "note": "public human-facing field manual"
+    },
+    {
+      "version": "1.1.0",
+      "note": "converted to Hermes skill: SKILL.md router + frontmatter, disclaimer/ack gate, human-in-the-loop approval gate; fixed dangling finding-ID cross-refs (AZ IAM-020/RBAC-010, AWS LOG-028/029), added F-AZ-RBAC-006 + F-AZ-MI-001/002, backfilled AWS cookbook finding mappings"
+    },
+    {
+      "version": "1.2.0",
+      "note": "added engagement report generator (scripts/report.py): engagement JSON -> self-contained HTML + PDF (WeasyPrint/wkhtmltopdf/Chromium), 7-part methodology structure, 5-tier severity, vendor-neutral (no branding), catalog-ID validation; samples/engagement.sample.json"
+    }
+  ]
+}

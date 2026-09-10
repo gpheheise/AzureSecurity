@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-label="Cloud Offensive Security">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0e1a"/>
+      <stop offset="0.55" stop-color="#0d1426"/>
+      <stop offset="1" stop-color="#060912"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#2dd4bf"/>
+      <stop offset="0.5" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0 L0 0 0 40" fill="none" stroke="#1e2a44" stroke-width="1" stroke-opacity="0.45"/>
+    </pattern>
+  </defs>
+
+  <!-- base -->
+  <rect width="1200" height="300" fill="url(#bg)"/>
+  <rect width="1200" height="300" fill="url(#grid)"/>
+  <rect width="1200" height="170" fill="url(#fade)"/>
+
+  <!-- top + bottom accent rules -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+  <rect x="64" y="232" width="320" height="3" fill="url(#accent)"/>
+
+  <!-- prompt glyph -->
+  <text x="64" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="34" fill="#2dd4bf" font-weight="700">&#187;_</text>
+
+  <!-- title -->
+  <text x="128" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="52" fill="#f1f5f9" font-weight="700" letter-spacing="2">CLOUD OFFENSIVE SECURITY</text>
+
+  <!-- subtitle -->
+  <text x="66" y="170" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill="#94a3b8" letter-spacing="0.5">Pentest &#183; Red Team &#183; TLPT &#183; Audit  //  AWS &#183; Azure &#183; GCP</text>
+
+  <!-- tagline near accent rule -->
+  <text x="66" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#64748b">A practitioner reference for people who actually run engagements.</text>
+
+  <!-- platform chips -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" font-weight="700">
+    <rect x="858" y="200" width="86" height="38" rx="4" fill="#0f1a2e" stroke="#2dd4bf" stroke-opacity="0.7"/>
+    <text x="901" y="225" fill="#5eead4" text-anchor="middle">AWS</text>
+
+    <rect x="956" y="200" width="98" height="38" rx="4" fill="#0f1a2e" stroke="#38bdf8" stroke-opacity="0.7"/>
+    <text x="1005" y="225" fill="#7dd3fc" text-anchor="middle">AZURE</text>
+
+    <rect x="1066" y="200" width="74" height="38" rx="4" fill="#0f1a2e" stroke="#3b82f6" stroke-opacity="0.7"/>
+    <text x="1103" y="225" fill="#93c5fd" text-anchor="middle">GCP</text>
+  </g>
+
+  <!-- kill-chain dots, top right -->
+  <g>
+    <circle cx="880" cy="70" r="5" fill="#2dd4bf"/>
+    <circle cx="912" cy="70" r="5" fill="#34d399"/>
+    <circle cx="944" cy="70" r="5" fill="#38bdf8"/>
+    <circle cx="976" cy="70" r="5" fill="#60a5fa"/>
+    <circle cx="1008" cy="70" r="5" fill="#818cf8"/>
+    <circle cx="1040" cy="70" r="5" fill="#a78bfa"/>
+    <circle cx="1072" cy="70" r="5" fill="#f472b6"/>
+    <line x1="885" y1="70" x2="1067" y2="70" stroke="#334155" stroke-width="1.5" stroke-opacity="0.6"/>
+    <text x="1092" y="75" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" fill="#475569">kill chain</text>
+  </g>
+</svg>

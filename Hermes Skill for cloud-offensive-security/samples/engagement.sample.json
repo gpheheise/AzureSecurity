@@ -1,0 +1,73 @@
+{
+  "engagement": {
+    "title": "Cloud Security Assessment",
+    "client": "Example Client Ltd",
+    "assessor": "Offensive Security Team",
+    "mode": "CLOUD_REDTEAM",
+    "platforms": ["AWS", "Azure"],
+    "period": { "start": "2026-09-01", "end": "2026-09-12" },
+    "scope": ["123456789012 (AWS prod org)", "example.onmicrosoft.com"],
+    "roe": "Testing window 08:00–18:00 CET on business days. No denial-of-service. No data exfiltration beyond proof-of-access sampling. Production write actions require per-operation approval.",
+    "severity_model": "5-tier (Info / Low / Medium / High / Critical)"
+  },
+  "executive_summary": "The assessment identified control gaps that, chained together, allowed escalation from a low-privileged identity to organisation-wide administrative access. The most material issues are a permissive S3 public-access configuration and an IAM privilege-escalation path via role trust. None of the intrusive steps triggered an alert, indicating a detection gap in the cloud control plane.\n\nAddressing the four High/Critical findings closes the demonstrated escalation path; the remaining items reduce residual risk and improve detection coverage.",
+  "attack_narrative": [
+    { "time": "Day 1 10:12", "step": "Enumerated tenant and public storage; identified listable bucket", "detected": false },
+    { "time": "Day 2 14:40", "step": "Validated leaked access key; enumerated IAM permissions", "detected": false },
+    { "time": "Day 3 09:05", "step": "Escalated via iam:UpdateAssumeRolePolicy on a privileged role", "detected": false },
+    { "time": "Day 3 11:20", "step": "Assumed admin role; reached organisation management account", "detected": true }
+  ],
+  "detection_assessment": "Control-plane logging was enabled but no alerting fired on the privilege-escalation actions. CloudTrail captured the IAM changes, but there were no detections for AssumeRolePolicy modification or for first-time admin role assumption. Recommended detections are listed under Recommendations.",
+  "findings": [
+    {
+      "id": "F-AWS-S3-001",
+      "title": "S3 bucket public-access block not enabled",
+      "severity": "Critical",
+      "asset": "arn:aws:s3:::example-customer-data",
+      "description": "All four public-access-block settings are disabled at the bucket level, allowing a misconfigured policy or ACL to expose contents publicly.",
+      "attack_path": "Bucket has no public-access block → a permissive ACL or policy would make objects world-readable.",
+      "evidence": "$ aws s3api get-public-access-block --bucket example-customer-data\n{ \"PublicAccessBlockConfiguration\": { \"BlockPublicAcls\": false, \"IgnorePublicAcls\": false, \"BlockPublicPolicy\": false, \"RestrictPublicBuckets\": false } }",
+      "impact": "Potential exposure of personal data; a compliance gap under privacy regulations governing security of processing.",
+      "remediation": "Enable all four public-access-block settings at both bucket and account level.",
+      "references": ["CIS AWS Foundations 2.1.5", "CWE-732", "T1530"]
+    },
+    {
+      "id": "F-AWS-IAM-020",
+      "title": "IAM privilege-escalation path via role trust modification",
+      "severity": "High",
+      "asset": "role/app-deploy → role/org-admin",
+      "description": "A low-privileged principal holds iam:UpdateAssumeRolePolicy on a highly privileged role, allowing it to add itself as a trusted principal and assume administrative access.",
+      "attack_path": "app-deploy has iam:UpdateAssumeRolePolicy on org-admin → rewrite trust to include app-deploy → sts:AssumeRole into org-admin.",
+      "impact": "Full escalation from application identity to organisation administrator.",
+      "remediation": "Remove iam:UpdateAssumeRolePolicy from application identities; apply permission boundaries to privileged roles.",
+      "references": ["CWE-269", "T1548", "CIS AWS Foundations 1.16"]
+    },
+    {
+      "id": "F-AZ-MI-001",
+      "title": "User-assigned managed identity shared across workloads",
+      "severity": "Medium",
+      "asset": "uami/shared-runtime",
+      "description": "A single user-assigned managed identity is attached to multiple workloads of differing trust levels, widening blast radius if any one workload is compromised.",
+      "impact": "Compromise of the lowest-trust workload yields the identity's full permission set across all attached workloads.",
+      "remediation": "Split into per-workload identities scoped to least privilege.",
+      "references": ["T1078.004"]
+    }
+  ],
+  "recommendations": {
+    "quick_wins": [
+      "Enable account-level S3 public-access block.",
+      "Remove iam:UpdateAssumeRolePolicy from non-admin identities."
+    ],
+    "structural": [
+      "Apply permission boundaries to all privileged roles.",
+      "Split shared managed identities into per-workload identities."
+    ],
+    "strategic": [
+      "Add control-plane detections for AssumeRolePolicy changes and first-time admin role assumption.",
+      "Adopt an organisation-wide guardrail (SCP/Azure Policy) baseline."
+    ]
+  },
+  "appendices": [
+    { "title": "A. Tooling", "body": "Enumeration performed with read-only tooling; intrusive steps gated through the approval workflow.", "verbatim": false }
+  ]
+}

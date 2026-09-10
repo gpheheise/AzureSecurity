@@ -1,0 +1,53 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.\#*
+
+# Engagement data — NEVER commit real client output
+# (these patterns are a safety net, not a substitute for care)
+*.creds
+*.key
+*.pem
+*.pfx
+*.p12
+credentials
+credentials.json
+*-sa-key.json
+*serviceaccount*.json
+.env
+.env.*
+loot/
+scope/
+clients/
+engagements/
+output/
+out/
+reports/*.docx
+reports/*.pdf
+
+# Tool output
+scoutsuite-report/
+prowler-output/
+pacu_data/
+*.sqlite
+roadrecon.db
+*.bloodhound
+*.zip
+*.tar.gz
+
+# Python (if helper scripts are added)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node (if any tooling is added)
+node_modules/
